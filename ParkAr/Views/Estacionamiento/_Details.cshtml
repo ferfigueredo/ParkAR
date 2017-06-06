@@ -1,0 +1,37 @@
+﻿@model  ParkAr.Models.Estacionamiento
+
+<hr />
+<h3>Estacionamiento</h3>
+
+
+<table class="table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>Estacionamiento</td>
+            <td>Direccion</td>
+            <td>Piso</td>
+            <td>Numero</td>
+              <td>Estado</td>
+                            <td>Direccion</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Nombre</td>
+                                <td>@item.Direccion</td>
+                                @foreach (var box in item.Boxes)
+                                {
+                                    <td>@box.Piso</td>
+                                    <td>@box.Numero</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+
+
+
+</table>
+
+                

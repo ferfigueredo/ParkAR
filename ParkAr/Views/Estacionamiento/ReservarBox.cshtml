@@ -1,0 +1,144 @@
+﻿    
+@model ParkAr.ViewModels.ReservaBoxViewModel
+
+@{
+    ViewBag.Title = "ReservarBox";
+    Layout = "~/Views/Shared/_LayoutEmbebedPage.cshtml";
+}
+
+<script>
+    function generarReservaBox() {
+        var _data = {
+            "boxID": $('#boxSeleccionado').val(),
+            "estacionamientoID": $('#EstacionamientoSelect').val(),
+            "desde": $('#Desde').val(),
+            "hasta": $('#Hasta').val(),
+            "marca": $('#Vehiculo_Marca').val(),
+            "patente": $('#Vehiculo_Patente').val(),
+            "modelo": $('#Vehiculo_Modelo').val(),
+            "usuario": $('#usuario').val()
+        };
+
+            $.ajax({
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                url: '@Url.Action("GenerarReserva")',
+                data: JSON.stringify(_data),
+                success: function (result) { 
+                    $('#container-boxes').html(result); },
+                error: function () { alert('Error'); }
+            });
+        }
+
+</script>
+
+@*<link type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css"/>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <h2>ReservarBox</h2>*@
+
+    <!-- El primer argumento es el action, el segundo el controller-->
+
+    @using (Html.BeginForm("GenerarReserva", "Estacionamiento"))
+    {
+        <div class="form-group">
+            @Html.LabelFor(r => r.Cliente.Email)
+            @Html.TextBoxFor(r => r.Cliente.Email, new { @class = "form-control", @readonly="true" })
+            <input type="hidden" value="@Model.Cliente.Email" id="usuario" />
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(r => r.BoxSeleccionado.Numero)
+            @Html.TextBoxFor(r => r.BoxSeleccionado.Numero, new { @class = "form-control" })
+            <input type="hidden" value="@Model.BoxSeleccionado.BoxId" id="boxSeleccionado"/>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(r => r.EstacionamientoSeleccionado)
+            
+
+            @Html.TextBoxFor(r => r.EstacionamientoSeleccionado.Nombre, new { @class = "form-control", @readonly = "true", @style = "font-weight: 900; width:200%" } )
+            @Html.ValidationMessageFor(r => r.BoxSeleccionado.BoxId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(r => r.Categoria)
+            @Html.TextBoxFor(r => r.BoxSeleccionado.CategoriaBox.Descripcion, new { @class = "form-control" })
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(r => r.Vehiculo.Marca)
+
+
+            @Html.TextBoxFor(r => r.Vehiculo.Marca, new { @class = "form-control" })
+            @Html.ValidationMessageFor(r => r.BoxSeleccionado.BoxId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(r => r.Vehiculo.Modelo)
+
+
+            @Html.TextBoxFor(r => r.Vehiculo.Modelo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(r => r.BoxSeleccionado.BoxId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(r => r.Vehiculo.Patente)
+
+
+            @Html.TextBoxFor(r => r.Vehiculo.Patente, new { @class = "form-control" })
+            @Html.ValidationMessageFor(r => r.BoxSeleccionado.BoxId)
+        </div>
+
+
+        @*
+    <div class="form-group">
+        @Html.LabelFor(r => r.BoxSeleccionado.CategoriaBox.Descripcion)
+        @Html.TextBoxFor(r => r.BoxSeleccionado.CategoriaBox.Descripcion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.BoxSeleccionado.CategoriaBox.Descripcion)
+    </div>
+        *@
+        <div class="form-group">
+            @Html.LabelFor(r => r.Desde)
+            @*Html.TextBoxFor(r => r.Desde, "{0:dd MMM yyyy}", new { @class = "form-control" })**@
+            @Html.TextBoxFor(r => r.Desde, new { @class = "form-control"})
+            @Html.ValidationMessageFor(r => r.BoxSeleccionado.CategoriaBox.Descripcion)
+        </div>
+        <div id="hasta" class="form-group">
+            @Html.LabelFor(r => r.Hasta)
+            @*Html.TextBoxFor(r => r.Desde, "{0:dd MMM yyyy}", new { @class = "form-control" })**@
+            @Html.TextBoxFor(r => r.Hasta, new { @class = "form-control" })
+            @Html.ValidationMessageFor(r => r.BoxSeleccionado.CategoriaBox.Descripcion)
+        </div>
+        
+        @*
+        <div class="form-group">
+
+            @Html.LabelFor(r => r.Estacionamientos)
+            <!--DropDownListFort
+            Primer argumento: de que tipo  (es el foreign key del customer con el primary key del membershiptype)
+            Segundo argumento: Paso la lista de memberships
+            SelectList
+            Primer argumento: Listado de items
+            Segundo argumento: Nombre de la propiedad que tiene el valor
+            Tercer argumento: Nombre del valor que tiene el texto
+
+            Tercer argumento: Lo que quiero que aparezca dentro del combo visible, puedo poner ""
+            Cuarto argumento: el formato del textbox por bootrap-->
+            @Html.DropDownListFor(r => r.EstacionamientoSeleccionado, new SelectList(Model.Estacionamientos, "EstacionamientoId", "Nombre"), "Estacionamiento", new { @class = "form-control" })
+            @Html.ValidationMessageFor(r => r.CantidadHoras)
+        </div>
+        *@
+        <div class="form-group">
+            @Html.LabelFor(r => r.TipoVehiculos)
+            @Html.DropDownListFor(r => r.TipoVehiculoSeleccionado, new SelectList(Model.TipoVehiculos, "TipoVehiculoId", "Descripcion"), "Tipo de Vehiculo", new { @class = "form-control" })
+
+        </div>
+            @Html.HiddenFor(r => r.Cliente.ClienteId);
+
+            <button type="button" onclick="generarReservaBox();" class="btn btn-primary">Reservar</button>
+
+
+
+            }
+            @*<script type="text/javascript">
+                    $(document).ready(function () {
+                        $('.datepicker').datepicker();
+                    });
+
+                </script>*@

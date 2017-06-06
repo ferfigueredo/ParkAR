@@ -1,0 +1,55 @@
+﻿@model ParkAr.Models.Estacionamiento
+
+@{
+    ViewBag.Title = "Index3";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+   function reservarBox(boxId){
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("ReservarBox")',
+                data: { boxID: boxId, estacionamientoId: $('#EstacionamientoSelect').val() },
+                success: function (result) { $('#container-boxes').html(result); },
+                error: function () { alert('Error'); }
+            });
+        }
+
+</script>
+<h2>Boxes del Estacionamiento @Model.Nombre</h2>
+
+<table>
+    <thead>
+        <tr>
+            
+            <td>Box</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in @Model.Boxes)
+        {
+            <tr >                
+                @if (@item.EstadoBox.EstadoBoxId == 1) { 
+                     <td style="background-color:green" onclick="reservarBox(@item.BoxId)">
+                         @item.Numero                        
+                    </td>                   
+                }
+                @if (@item.EstadoBox.EstadoBoxId == 2)
+                {
+                    <td style="background-color:yellow">@item.Numero</td>
+                }
+                @if (@item.EstadoBox.EstadoBoxId == 3)
+                {
+                    <td style="background-color:red">@item.Numero</td>
+                }
+
+                <td>@item.EstadoBox.Descripcion</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+

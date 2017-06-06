@@ -1,0 +1,88 @@
+﻿@model  ParkAr.ViewModels.ReservaBoxViewModel
+
+@{
+    ViewBag.Title = " ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#EstacionamientoSelect").change(function () {
+                if ($('#EstacionamientoSelect').val() == 0) {
+                    $('#container-boxes').html("")
+                } else { 
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("Index3")',
+                        data: { EstacionamientoID: $('#EstacionamientoSelect').val() },
+                        success: function (result) {
+                            $('#container-boxes').html(result);
+                            $('#divListaEstacionamientos').hide();   
+                        },
+                        error: function () { alert('Error'); }
+                    });
+                }
+            });
+
+        });
+    </script>
+
+
+<div class="form-group" id="divListaEstacionamientos">
+
+    <h2>Seleccione Estacionamiento</h2>
+
+
+    <p>Estacionamiento</p>
+    @* @Html.DropDownList("Estacionamiento", new SelectList(Model.Select(e => e.Nombre).Distinct().ToList()), "EstacionamientoId", "Nombre", "Seleccione Estacionamiento", new { @class = "form-control" })-->*@
+
+
+    <select id="EstacionamientoSelect">
+        <option value="0">Seleccione un estacionamiento</option>
+        @foreach (var park in @Model.Estacionamientos)
+        {
+            <option value="@park.EstacionamientoId">@park.Nombre</option>
+        }
+    </select>
+</div>
+
+<div id="container-boxes">
+
+
+
+</div>
+
+
+@*
+<table class="table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>Estacionamiento</td>
+            <td>Direccion</td>
+            <td>Piso</td>
+            <td>Numero</td>
+            @*  <td>Estado</td>
+            <td>Direccion</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Direccion</td>
+                @foreach (var box in item.Boxes)
+                {
+                    <td>@box.Piso</td>
+                    <td>@box.Numero</td>
+                }
+            </tr>
+        }
+    </tbody>
+
+
+
+</table>
+*@
