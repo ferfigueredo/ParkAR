@@ -10,22 +10,10 @@ namespace ParkAr.Models
 {
     public class EstadoBox
     {
-
-        public EstadoBox(int id)
-        {
-            EstadoBoxId = id;
-        }
-
-        public EstadoBox()
-        {
-
-        }
+       
         public int EstadoBoxId { get; set; }
 
-
-        public string Descripcion { get; set; }
-
-        
+        public string Descripcion { get; set; }      
 
         
     }

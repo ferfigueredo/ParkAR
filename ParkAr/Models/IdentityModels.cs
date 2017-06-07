@@ -20,8 +20,9 @@ namespace ParkAr.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<EstadoReserva> EstadoBoxes { get; set; }
+        public DbSet<EstadoReserva> EstadoReservas { get; set; }
 
+        
         public DbSet<Box> Boxes { get; set; }
 
         public DbSet<Estacionamiento> Estacionamientos { get; set; }

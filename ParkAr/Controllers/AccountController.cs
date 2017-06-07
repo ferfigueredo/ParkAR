@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ParkAr.Models;
+using System.Data.Entity;
 
 namespace ParkAr.Controllers
 {
@@ -86,7 +87,7 @@ namespace ParkAr.Controllers
             {
                 case SignInStatus.Success:
 
-                    var user = _context.Cientes.SingleOrDefault(x => x.Email == "ferfigueredo@gmail.com" );
+                    var user = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(p => p.Email == "ferfigueredo@gmail.com" );
                     //var cliente = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(x => x.Email == "ferfigueredo@gmail.com");
                     Cliente cliente = (Cliente)user;
                     Session["user"] = cliente;

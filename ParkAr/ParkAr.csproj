@@ -275,6 +275,14 @@
     <Compile Include="Migrations\201706050017439_Vehiculos_Update2.Designer.cs">
       <DependentUpon>201706050017439_Vehiculos_Update2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706062300515_alter_EstadoBox_6_6_2017.cs" />
+    <Compile Include="Migrations\201706062300515_alter_EstadoBox_6_6_2017.Designer.cs">
+      <DependentUpon>201706062300515_alter_EstadoBox_6_6_2017.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706062308087_alter_EstadoBox_6_6_2017_2.cs" />
+    <Compile Include="Migrations\201706062308087_alter_EstadoBox_6_6_2017_2.Designer.cs">
+      <DependentUpon>201706062308087_alter_EstadoBox_6_6_2017_2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Box.cs" />
@@ -478,6 +486,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706050017439_Vehiculos_Update2.resx">
       <DependentUpon>201706050017439_Vehiculos_Update2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706062300515_alter_EstadoBox_6_6_2017.resx">
+      <DependentUpon>201706062300515_alter_EstadoBox_6_6_2017.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706062308087_alter_EstadoBox_6_6_2017_2.resx">
+      <DependentUpon>201706062308087_alter_EstadoBox_6_6_2017_2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

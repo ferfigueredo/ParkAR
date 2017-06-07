@@ -92,6 +92,7 @@ namespace ParkAr.Controllers
             //var estacionamientos = _context.Estacionamientos.Include("Boxes").ToList();
             var estacionamientos = _context.Estacionamientos.Include(e => e.Boxes).ToList();
 
+
             var s = Session;
 
             //var customers = _context.Customers.Include(c => c.MemberShipType).ToList();
@@ -146,7 +147,7 @@ namespace ParkAr.Controllers
 
             Cliente cliente = (Cliente)Session["user"];
 
-            cliente = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(x => x.ClienteId == cliente.ClienteId);
+           // cliente = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(x => x.ClienteId == cliente.ClienteId);
 
 
             Vehiculo vehiculo = cliente.getVehiculoPrincipal();
@@ -165,15 +166,7 @@ namespace ParkAr.Controllers
                 Hasta = new DateTime()
 
             };
-            /*var model = new ReservaBoxViewModel()
-            {
-                EstacionamientoSeleccionado = estacionamientoSeleccionado,
-                Estacionamientos = estacionamientos,
-                Cliente = cliente,
-                BoxSeleccionado = boxSeleccionado,
-                TipoVehiculos = tipoVehiculos
-            };
-            */
+           
             return View("ReservarBox", model);
 
         }
@@ -187,35 +180,34 @@ namespace ParkAr.Controllers
 
             var tempReserva = new Reserva();
 
+            EstadoBox estadoBoxReservado = _context.EstadosBox.SingleOrDefault(y => y.EstadoBoxId == 3);
+         
 
             int boxIdInt = Int32.Parse(boxID);
              Box boxSeleccionado = _context.Boxes.Include(x => x.CategoriaBox).Include(x => x.EstadoBox).SingleOrDefault(x => x.BoxId == boxIdInt);
-             boxSeleccionado.EstadoBox = new EstadoBox(3);
-             _context.Boxes.Add(boxSeleccionado);
+             boxSeleccionado.EstadoBox = estadoBoxReservado;
+             //_context.Boxes.Add(boxSeleccionado);
 
             
             DateTime dtDesde = Convert.ToDateTime(desde);
             DateTime dtHasta = Convert.ToDateTime(hasta);
             
-            IFormatProvider culture = new System.Globalization.CultureInfo("es-ES", true);
-
            
-            DateTime dt1 = DateTime.Parse(desde, culture, System.Globalization.DateTimeStyles.AssumeLocal);
-            DateTime dt2 = DateTime.Parse(hasta, culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            Cliente cliente = (Cliente)Session["user"];           
 
-            Cliente cliente = (Cliente)Session["user"];
-
-            cliente = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(x => x.ClienteId == cliente.ClienteId);
-
+            cliente = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(p => p.ClienteId == cliente.ClienteId);
 
             Vehiculo vehiculo = cliente.getVehiculoPrincipal();
-
             //tempReserva.BoxId = reservaModel.Box.BoxId;
+            var estadoReserva = _context.EstadoReservas.SingleOrDefault(x => x.EstadoReservaId == 1);
+
+            
+
             tempReserva.FechaDesde = dtDesde;
             tempReserva.FechaHasta = dtHasta;
             tempReserva.Vehiculo = vehiculo;
             tempReserva.Box = boxSeleccionado;
-            tempReserva.EstadoReserva = new EstadoReserva(1);
+            tempReserva.EstadoReserva = estadoReserva;
             tempReserva.BoxId = boxSeleccionado.BoxId;
 
              _context.Reservas.Add(tempReserva);
