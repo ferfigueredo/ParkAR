@@ -410,10 +410,11 @@
     <Content Include="Views\Estacionamiento\Index.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Estacionamiento\_Details.cshtml" />
-    <Content Include="Views\Estacionamiento\Index3.cshtml" />
+    <Content Include="Views\Estacionamiento\VerBoxes.cshtml" />
     <Content Include="Views\Estacionamiento\ReservarBox.cshtml" />
     <Content Include="Views\Shared\_LayoutEmbebedPage.cshtml" />
     <Content Include="Views\Estacionamiento\GenerarReserva.cshtml" />
+    <Content Include="Views\Shared\_LayoutAjaxResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

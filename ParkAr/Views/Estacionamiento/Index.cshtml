@@ -15,7 +15,7 @@
                 } else { 
                     $.ajax({
                         type: 'GET',
-                        url: '@Url.Action("Index3")',
+                        url: '@Url.Action("VerBoxes")',
                         data: { EstacionamientoID: $('#EstacionamientoSelect').val() },
                         success: function (result) {
                             $('#container-boxes').html(result);

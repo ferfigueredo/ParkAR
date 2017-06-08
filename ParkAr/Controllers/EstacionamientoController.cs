@@ -24,85 +24,10 @@ namespace ParkAr.Controllers
             _context.Dispose();
         }
 
-        // Prueba de pasar parámetro por URL o embebido en la la URL
-        // En este caso va a tirar error porque el RouterConfig.cs tiene como default {id} y yo tengo definido pruebaId
-        //http://localhost:49557/Estacionamiento/Prueba/232
-
-
-        // Prueba de pasar parámetro en el query string
-        //http://localhost:49557/Estacionamiento/Prueba?id=1
-        // Va a tira
-        public ActionResult Prueba (int? pruebaId)
-        {
-            if (!pruebaId.HasValue)
-            {
-                pruebaId = 18;
-            }
-            
-
-            return Content(String.Format("ID={0}", pruebaId));
-            
-        }
-
-        public ActionResult Prueba2(int? prueba2Id, string parametro)
-        {
-            if (!prueba2Id.HasValue)
-            {
-                prueba2Id = 1;
-            }
-
-            if (String.IsNullOrWhiteSpace(parametro))
-            {
-                parametro = "Octavio";
-            }
-
-            return Content(String.Format("Parametro={1},Valor={0}", parametro, prueba2Id));
-        }
-
-        // GET: Estacionamiento
-        /*public ActionResult Index2()
-        {
-            List<EstadoBox> estadosBox = new List<EstadoBox>
-            {
-                new EstadoBox {EstadoBoxId = 1, Descripcion="Libre"},
-                new EstadoBox {EstadoBoxId = 2, Descripcion="Ocupado"},
-                new EstadoBox {EstadoBoxId = 3, Descripcion="Reservado"}
-            };
-
-            List<Box> boxes = new List<Box>
-            {
-                new Box {BoxId = 1, Piso =1, Numero=10, CategoriaBoxId=1},
-                new Box {BoxId = 2, Piso =1, Numero=11, CategoriaBoxId=1},
-                new Box {BoxId = 3, Piso =2, Numero=20, CategoriaBoxId=2},
-                new Box {BoxId = 4, Piso =3, Numero=33, CategoriaBoxId=3},
-                new Box {BoxId = 5, Piso =4, Numero=44, CategoriaBoxId=3}
-            };
-
-            var estacionamiento = new Estacionamiento()
-            {
-                EstacionamientoId = 1,
-                Direccion="Palermo",
-                Boxes = boxes
-            };
-            return View(estacionamiento);
-        }
-        */
+        
         public ActionResult Index()
         {
-            //var estacionamientos = _context.Estacionamientos.Include("Boxes").ToList();
             var estacionamientos = _context.Estacionamientos.Include(e => e.Boxes).ToList();
-
-
-            var s = Session;
-
-            //var customers = _context.Customers.Include(c => c.MemberShipType).ToList();
-            // Aca entity framework no hace un query a la base. Es lo que se llama un defered execution
-            // El query consultará en la base, cuando en el avisa recorra con el foreach
-            // con el ToList() inmediatamente hago el query en la base
-            // Include(c => c.MemberShipType) es la relación que hace para unir la tabla Customer -> Membershiptype
-            // Se hace un Eager Loading
-            // Por default, entity framework no crea las relaciones
-
             var model = new ReservaBoxViewModel
             {
                 Cliente = new Cliente(),
@@ -112,23 +37,13 @@ namespace ParkAr.Controllers
             return View(model);
         }
 
-        public ActionResult Index3(string estacionamientoID)
+        public ActionResult VerBoxes(string estacionamientoID)
         {
             //var estacionamientos = _context.Estacionamientos.Include("Boxes").ToList();
             int id = Int32.Parse(estacionamientoID);
             var estacionamiento = _context.Estacionamientos
                                     .Include(x => x.Boxes.Select(y => y.EstadoBox)).SingleOrDefault(x => x.EstacionamientoId == id);
-            //var estacionamiento2 = _context.Estacionamientos.Include(e => e.Boxes).SingleOrDefault(e => e.EstacionamientoId == 1);
 
-
-
-            //var customers = _context.Customers.Include(c => c.MemberShipType).ToList();
-            // Aca entity framework no hace un query a la base. Es lo que se llama un defered execution
-            // El query consultará en la base, cuando en el avisa recorra con el foreach
-            // con el ToList() inmediatamente hago el query en la base
-            // Include(c => c.MemberShipType) es la relación que hace para unir la tabla Customer -> Membershiptype
-            // Se hace un Eager Loading
-            // Por default, entity framework no crea las relaciones
 
             return View(estacionamiento);
         }
