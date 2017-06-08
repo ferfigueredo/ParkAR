@@ -303,10 +303,12 @@
     <Compile Include="ViewModels\ReservaBoxViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\parking.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\parking2.jpg" />
+    <Content Include="Content\park_hd2.jpg" />
+    <Content Include="Content\park_open.jpg" />
+    <Content Include="Content\Subterranean.jpg" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
