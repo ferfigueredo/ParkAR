@@ -9,10 +9,14 @@
    function reservarBox(boxId){
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("VerBoxes")',
+                url: '@Url.Action("ReservarBox")',
                 data: { boxID: boxId, estacionamientoId: $('#EstacionamientoSelect').val() },
                 success: function (result) { $('#container-boxes').html(result); },
-                error: function () { alert('Error'); }
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                    alert(xhr.responseText);
+                }
             });
         }
 

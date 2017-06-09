@@ -82,7 +82,7 @@ namespace ParkAr.Controllers
 
             };
            
-            return View("ReservarBox", model);
+            return View("ReservaBox", model);
 
         }
 
