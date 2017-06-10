@@ -21,7 +21,11 @@
                             $('#container-boxes').html(result);
                             $('#divListaEstacionamientos').hide();   
                         },
-                        error: function () { alert('Error'); }
+                        error: function () {
+                            alert(xhr.status);
+                            alert(thrownError);
+                            alert(xhr.responseText);
+                        }
                     });
                 }
             });

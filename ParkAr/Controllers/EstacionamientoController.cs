@@ -34,6 +34,14 @@ namespace ParkAr.Controllers
                 Estacionamientos = estacionamientos
 
             };
+
+
+            /** Esto es para simplificar el desarrollo y no tener que estara logeandose a cada rato */
+            var user = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(p => p.Email == "ferfigueredo@gmail.com");
+            Cliente cliente = (Cliente)user;
+            Session["user"] = cliente;
+
+
             return View(model);
         }
 
@@ -43,6 +51,29 @@ namespace ParkAr.Controllers
             int id = Int32.Parse(estacionamientoID);
             var estacionamiento = _context.Estacionamientos
                                     .Include(x => x.Boxes.Select(y => y.EstadoBox)).SingleOrDefault(x => x.EstacionamientoId == id);
+
+            /* **** Para agregar Boxes a un estacionamiento ***** */
+
+           /* EstadoBox estadoBoxLibre = _context.EstadosBox.SingleOrDefault(y => y.EstadoBoxId == 1);
+            CategoriaBox categoria = _context.CategoriasBox.SingleOrDefault(y => y.CategoriaBoxId == 1);
+            int i = 41;
+            while (i < 81) {
+                Box box = new Box()
+                {
+                    Piso = 2,
+                    Numero = i,
+                    EstacionamientoId = estacionamiento.EstacionamientoId,
+                    Estacionamiento = estacionamiento,
+                    EstadoBox = estadoBoxLibre,
+                    EstadoBoxId = estadoBoxLibre.EstadoBoxId,
+                    CategoriaBox = categoria,
+                    CategoriaBoxId = categoria.CategoriaBoxId
+                    
+                };
+                i++;
+                _context.Boxes.Add(box);
+            }
+            _context.SaveChanges();*/
 
 
             return View(estacionamiento);

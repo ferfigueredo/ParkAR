@@ -12,7 +12,7 @@
                 url: '@Url.Action("ReservarBox")',
                 data: { boxID: boxId, estacionamientoId: $('#EstacionamientoSelect').val() },
                 success: function (result) { $('#container-boxes').html(result); },
-                error: function (xhr, ajaxOptions, thrownError) {
+                error: function () {
                     alert(xhr.status);
                     alert(thrownError);
                     alert(xhr.responseText);
@@ -23,37 +23,14 @@
 </script>
 <h2>Boxes del Estacionamiento @Model.Nombre</h2>
 
-<table>
-    <thead>
-        <tr>
-            
-            <td>Box</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in @Model.Boxes)
-        {
-            <tr >                
-                @if (@item.EstadoBox.EstadoBoxId == 1) { 
-                     <td style="background-color:green" onclick="reservarBox(@item.BoxId)">
-                         @item.Numero                        
-                    </td>                   
-                }
-                @if (@item.EstadoBox.EstadoBoxId == 2)
-                {
-                    <td style="background-color:yellow">@item.Numero</td>
-                }
-                @if (@item.EstadoBox.EstadoBoxId == 3)
-                {
-                    <td style="background-color:red">@item.Numero</td>
-                }
+@foreach (var item in @Model.Boxes)
+{
 
-                <td>@item.EstadoBox.Descripcion</td>
-            </tr>
-        }
-    </tbody>
+        <div style="background-color:green; border-color:azure; border-spacing:5px!important" onclick="reservarBox(@item.BoxId)" width="30px" height="50px" >
+            @item.Numero
+        </div>
+   
 
-</table>
-
+}
 
 
