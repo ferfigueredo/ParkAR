@@ -23,14 +23,46 @@
 </script>
 <h2>Boxes del Estacionamiento @Model.Nombre</h2>
 
-@foreach (var item in @Model.Boxes)
-{
 
-        <div style="background-color:green; border-color:azure; border-spacing:5px!important" onclick="reservarBox(@item.BoxId)" width="30px" height="50px" >
+<div id="container-boxes">
+
+    <p> Entre</p>
+    
+   
+    <div class="container-fluid">
+        <div class="row">
+            @for (var i = 0; i < Model.Boxes.Count; i++)
+            {
+                if (i > 0 && i % 12 == 0)
+                {
+                    @:</div><div class="row">
+                }
+                <div class="col-lg-1">@Html.TextBoxFor(x => x.Boxes[i].Value)</div>
+            }
+
+
+        </div>
+
+    </div>
+    
+    @*
+    @foreach (var item in @Model.Boxes)
+    {
+
+        <div style="background-color:green; border-color:azure; border-spacing:5px!important" onclick="reservarBox(@item.BoxId)" width="30px" height="50px">
             @item.Numero
         </div>
+
+
+    }
+    *@
+</div>
+
+
+
    
 
-}
+
+
 
 
