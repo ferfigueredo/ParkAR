@@ -1,7 +1,7 @@
 ﻿@model ParkAr.Models.Estacionamiento
 
 @{
-    ViewBag.Title = "Index3";
+    ViewBag.Title = "Boxes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -26,9 +26,29 @@
 
 <div id="container-boxes">
 
-    <p> Entre</p>
+    <table class="table table-striped">
+        <tdhead>
+            <tr>
+                <th><font size="6" color="grey">Piso</font></th>
+                <th><font size="6" color="grey">Numero</font></th>
+            </tr>
+        </tdhead>
+        <tbody>
+            @foreach (var item in Model.Boxes)
+            {
+                <tr>
+                    <th>@item.Piso</th>
+                    <th onclick="reservarBox(@item.BoxId)">@item.Numero</th>
+                </tr>
+
+            }
+        </tbody>    
+        
+
+    </table>
+
     
-   
+   @*
     <div class="container-fluid">
         <div class="row">
             @for (var i = 0; i < Model.Boxes.Count; i++)
