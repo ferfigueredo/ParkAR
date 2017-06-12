@@ -27,19 +27,18 @@ namespace ParkAr.Controllers
         
         public ActionResult Index()
         {
-            var estacionamientos = _context.Estacionamientos.Include(e => e.Boxes).ToList();
-            var model = new ReservaBoxViewModel
-            {
-                Cliente = new Cliente(),
-                Estacionamientos = estacionamientos
-
-            };
-
-
             /** Esto es para simplificar el desarrollo y no tener que estara logeandose a cada rato */
             var user = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(p => p.Email == "ferfigueredo@gmail.com");
             Cliente cliente = (Cliente)user;
             Session["user"] = cliente;
+
+            var estacionamientos = _context.Estacionamientos.Include(e => e.Boxes).ToList();
+            var model = new ReservaBoxViewModel
+            {
+                Cliente = (Cliente)Session["user"],
+                Estacionamientos = estacionamientos
+
+            };          
 
 
             return View(model);
