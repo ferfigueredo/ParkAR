@@ -24,61 +24,99 @@
 <h2>Boxes del Estacionamiento @Model.Nombre</h2>
 
 
-<div id="container-boxes">
+<div class="container-fluid">
 
-    <table class="table table-striped">
-        <tdhead>
-            <tr>
-                <th><font size="6" color="grey">Piso</font></th>
-                <th><font size="6" color="grey">Numero</font></th>
-            </tr>
-        </tdhead>
-        <tbody>
-            @foreach (var item in Model.Boxes)
+    
+    <div class="row">
+
+        @foreach (var item in Model.Boxes)
+        {
+            if (item.EstadoBox.Descripcion.Equals("Libre"))
             {
-                <tr>
-                    <th>@item.Piso</th>
-                    <th onclick="reservarBox(@item.BoxId)">@item.Numero</th>
-                </tr>
-
+                <div class="col-lg-2" style="border-style:solid; border-width:thick; background-color:green; border-color:azure; border-spacing:5px!important" onclick="reservarBox(@item.BoxId)" width="115px" height="220px"><font size="6">@item.Numero</font></div>
+                <div class="col-md-1">
+                   <!--Agrego espacio entre columnas-->
+                </div>
             }
-        </tbody>    
+            else
+            {
+                <div class="col-lg-2" style="border-style:solid; border-width:thick; background-color:red; border-color:azure; border-spacing:5px!important"><font size="6">@item.Numero</font></div>
+                <div class="col-md-1">
+                    <!--Agrego espacio entre columnas-->
+                </div>
+            }
+
+           
+        }
         
 
-    </table>
+    </div>
+</div>
+   
+   
 
-    
-   @*
-    <div class="container-fluid">
-        <div class="row">
-            @for (var i = 0; i < Model.Boxes.Count; i++)
-            {
-                if (i > 0 && i % 12 == 0)
+
+    @*
+        <table class="table table-striped">
+            <tdhead>
+                <tr>
+                    <th><font size="6" color="grey">Piso</font></th>
+                    <th><font size="6" color="grey">Numero</font></th>
+                </tr>
+            </tdhead>
+            <tbody>
+                @foreach (var item in Model.Boxes)
                 {
-                    @:</div><div class="row">
-                }
-                <div class="col-lg-1">@Html.TextBoxFor(x => x.Boxes[i].Value)</div>
-            }
+                    <tr>
+                        if(@item.EstadoBox.Descripcion.Equals("Libre"){
+                            <th>@item.Piso</th>
+                            <th onclick="reservarBox(@item.BoxId)">@item.Numero</th>
+                        }
+                        else(){
+                            <th>@item.Piso</th>
+                            <th onclick="reservarBox(@item.BoxId)">@item.Numero</th>
+                        }
 
+                    </tr>
+
+                }
+            </tbody>
+
+
+        </table>
+
+
+       @*
+        <div class="container-fluid">
+            <div class="row">
+                @for (var i = 0; i < Model.Boxes.Count; i++)
+                {
+                    if (i > 0 && i % 12 == 0)
+                    {
+                        @:</div><div class="row">
+                    }
+                    <div class="col-lg-1">@Html.TextBoxFor(x => x.Boxes[i].Value)</div>
+                }
+
+
+            </div>
 
         </div>
+
+        @*
+        @foreach (var item in @Model.Boxes)
+        {
+
+            <div style="background-color:green; border-color:azure; border-spacing:5px!important" onclick="reservarBox(@item.BoxId)" width="30px" height="50px">
+                @item.Numero
+            </div>
+
+
+        }
 
     </div>
-    
-    @*
-    @foreach (var item in @Model.Boxes)
-    {
 
-        <div style="background-color:green; border-color:azure; border-spacing:5px!important" onclick="reservarBox(@item.BoxId)" width="30px" height="50px">
-            @item.Numero
-        </div>
-
-
-    }
     *@
-</div>
-
-
 
    
 
