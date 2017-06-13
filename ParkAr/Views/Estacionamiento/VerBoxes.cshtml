@@ -22,47 +22,36 @@
 
 </script>
 <h2>Boxes del Estacionamiento @Model.Nombre</h2>
-
 @*
-    <div id="container-boxes">
-
-        <table class="table table-striped">
-            <tdhead>
-                <tr>
-                    <th><font size="6" color="grey">Piso</font></th>
-                    <th><font size="6" color="grey">Numero</font></th>
-                </tr>
-            </tdhead>
-            <tbody>
-                @foreach (var item in Model.Boxes)
-                {
-                    <tr>
-                        <th>@item.Piso</th>
-                        <th onclick="reservarBox(@item.BoxId)">@item.Numero</th>
-                    </tr>
-
-                }
-            </tbody>
 
 
-        </table>
-*@
-    
-   @*
+<div id="container-boxes">
     <div class="container-fluid">
         <div class="row">
-            @for (var i = 0; i < Model.Boxes.Count; i++)
+
+            @foreach (var item in Model.Boxes)
             {
-                if (i > 0 && i % 12 == 0)
+                if (item.EstadoBox.Descripcion.Equals("Libre"))
                 {
-                    @:</div><div class="row">
+                    <div class="col-lg-2" style="border-style:solid; border-width:thick; background-color:green; border-color:azure; border-spacing:5px!important" onclick="reservarBox(@item.BoxId)" width="115px" height="220px"><font size="6">@item.Numero</font></div>
+                    <div class="col-md-1">
+                        <!--Agrego espacio entre columnas-->
+                    </div>
                 }
-                <div class="col-lg-1">@Html.TextBoxFor(x => x.Boxes[i].Value)</div>
+                else
+                {
+                    <div class="col-lg-2" style="border-style:solid; border-width:thick; background-color:red; border-color:azure; border-spacing:5px!important"><font size="6">@item.Numero</font></div>
+                    <div class="col-md-1">
+                        <!--Agrego espacio entre columnas-->
+                    </div>
+                }
+
+
             }
         </div>
-
     </div>
-    *@
+
+ *@   
     <div >
     @foreach (var item in @Model.Boxes)
     {
@@ -89,8 +78,14 @@
 </div>
 
 
+</div>
+
 
    
+
+
+          
+
 
 
 
