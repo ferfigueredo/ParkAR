@@ -11,7 +11,7 @@
             @Html.ActionLink("Mis Reservas", "Index", "Estacionamiento", routeValues: null, htmlAttributes: new { title = "Reservar" })
         </li>
         <li style="color:red!important">
-            @Html.ActionLink("Mi Cuenta", "Index", "Estacionamiento", routeValues: null, htmlAttributes: new { title = "Mi cuenta" })
+            @Html.ActionLink("Mi Cuenta", "Index", "Perfil", routeValues: null, htmlAttributes: new { title = "Mi cuenta" })
         </li>
         <li>
             @Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Ver mi usuario" })

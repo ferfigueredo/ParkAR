@@ -1,9 +1,76 @@
-﻿
+﻿@model ParkAr.Models.Reserva
 @{
     ViewBag.Title = "GenerarReserva";
     Layout = "~/Views/Shared/_LayoutAjaxResult.cshtml";
 }
-RESERVA GENERADA!
+
 
 <h2>GenerarReserva</h2>
 
+
+@using (Html.BeginForm("GenerarReserva", "Estacionamiento"))
+{
+    <div class="form-group">
+        <div>
+            @Html.LabelFor(r => r.Cliente.Nombre)
+            @Model.Cliente.Nombre &nbsp;  @Model.Cliente.Apellido
+            <input type="hidden" value="@Model.Cliente.Nombre" id="usuario" />
+        </div>
+        <div>
+            @Html.LabelFor(r => r.BoxSeleccionado.Numero)
+            @Model.BoxSeleccionado.Numero
+            <input type="hidden" value="@Model.BoxSeleccionado.BoxId" id="boxSeleccionado" />
+        </div>
+        <div>
+            @Html.LabelFor(r => r.EstacionamientoSeleccionado)
+            @Model.EstacionamientoSeleccionado.Nombre
+        </div>
+        <div>
+            @Html.LabelFor(r => r.BoxSeleccionado.CategoriaBox)
+            @Model.BoxSeleccionado.CategoriaBox.Descripcion
+        </div>
+        <div>
+            @Html.LabelFor(r => r.Desde)
+            @Model.Desde                      
+        </div>
+        <div>
+            @Html.LabelFor(r => r.Hasta)
+            @Model.Hasta          
+        </div>
+        <div>
+            @Html.LabelFor(r => r.Hasta)
+            @Model.Hasta            
+        </div>
+        <div>
+            @Html.LabelFor(r => r.Hasta)
+            @Model.Hasta
+            
+        </div>
+        <div>
+            <br />
+            @Html.LabelFor(r => r.Vehiculo)
+            <select id="VehiculoSelect" value="@Model.Cliente.VehiculoPrincipalId">
+
+                @foreach (var vehiculo in @Model.Cliente.Vehiculos)
+                {
+                    if (@vehiculo.VehiculoId == @Model.Cliente.VehiculoPrincipalId)
+                    {
+                        <option value="@vehiculo.VehiculoId" selected="selected"> @vehiculo.Marca &nbsp;-&nbsp; @vehiculo.Modelo&nbsp;-&nbsp;@vehiculo.Patente</option>
+                    }
+                    else
+                    {
+                        <option value="@vehiculo.VehiculoId"> @vehiculo.Marca&nbsp;-&nbsp; @vehiculo.Modelo&nbsp;-&nbsp;@vehiculo.Patente</option>
+                    }
+
+                }
+            </select>
+            <br />
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <button type="button" onclick="generarReservaBox();" class="btn btn-primary left">Reservar</button>
+            <button type="button" onclick="cancelar();" class="btn btn-danger right">Cancelar</button>
+        </div>
+    </div>
+}

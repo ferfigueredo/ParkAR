@@ -1,0 +1,56 @@
+﻿@model ParkAr.ViewModels.ConfirmacionReservaViewModel
+@{
+    ViewBag.Title = "GenerarReserva";
+    Layout = "~/Views/Shared/_LayoutAjaxResult.cshtml";
+}
+<script>
+    function volver() {
+        window.location.href = "/";
+    }
+
+</script>
+
+<h2>Reserva Confirmada</h2>
+
+
+@using (Html.BeginForm("ConfirmacionReserva", "ConfirmacionReserva"))
+{
+    <div class="form-group">
+        <div>
+            @Html.LabelFor(r => r.Hasta)
+            @Model.EstacionamientoSeleccionado.Nombre
+            @Model.EstacionamientoSeleccionado.Direccion
+        </div>
+        <div>
+            @Html.LabelFor(r => r.Cliente)
+            @Model.Cliente.Nombre &nbsp;  @Model.Cliente.Apellido            
+        </div>
+        <div>
+            @Html.LabelFor(r => r.Box)
+            @Model.Box.Numero           
+        </div>
+        <div>
+            @Html.LabelFor(r => r.EstacionamientoSeleccionado)
+            @Model.EstacionamientoSeleccionado.Nombre
+        </div>        
+        <div>
+            @Html.LabelFor(r => r.Desde)
+            @Model.Desde
+        </div>
+        <div>
+            @Html.LabelFor(r => r.Hasta)
+            @Model.Hasta
+        </div>
+        <div>
+            @Html.LabelFor(r => r.Vehiculo)
+            @Model.Vehiculo.Marca &nbsp;-&nbsp; @Model.Vehiculo.Modelo&nbsp;-&nbsp;@Model.Vehiculo.Patente
+        </div>        
+        
+        <br />
+        <br />
+        <div class="form-group">
+            <button type="button" onclick="volver();" class="btn btn-primary left">Cerrar</button>
+            
+        </div>
+    </div>
+}

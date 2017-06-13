@@ -16,6 +16,8 @@ namespace ParkAr.Models
 
         public ICollection<Box> Boxes { get; set; }
 
+
+
         public Estacionamiento()
         {
             this.Boxes = new List<Box>();

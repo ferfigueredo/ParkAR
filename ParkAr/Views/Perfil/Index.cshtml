@@ -1,0 +1,138 @@
+﻿@model  ParkAr.ViewModels.PerfilUserViewModel
+
+@{
+    ViewBag.Title = "ParkAr";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    function eliminarVehiculo(vehiculoId) {
+
+        var _data = {
+            "vehiculoId": vehiculoId,
+        };
+
+        $.ajax({
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            url: '@Url.Action("EliminarVehiculo")',
+                data: JSON.stringify(_data),
+                success: function (result) {
+                    //$('#container-boxes').html(result);
+                    $('#'+vehiculoId).remove();
+                },
+                error: function () { alert('Error'); }
+            });
+        }
+    
+    function setearPrincipal(vehiculoId) {
+        var _data = {
+            "vehiculoId": vehiculoId,
+        };
+
+            $.ajax({
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                url: '@Url.Action("SetearVehiculoPrincipal")',
+                data: JSON.stringify(_data),
+                success: function (result) {
+                    $("#innerDiv" + vehiculoId).css("background-color", "#2180ac");
+                    window.location.reload();                   
+                },
+                error: function () { alert('Error'); }
+            });
+        }
+</script>
+
+    <h2>Mi Cuenta</h2>
+    <br />
+
+    <h3>Datos Personales</h3>
+    Nombre: @Model.Cliente.Nombre <br />
+    Apellidp: @Model.Cliente.Apellido <br />
+    Direccion: @Model.Cliente.Direccion <br />
+    Telefono: @Model.Cliente.Telefono <br />
+    Email: @Model.Cliente.Email <br />
+
+    <br />
+<div id="container-boxes">
+    <h3>Vehiculo(s)</h3>
+
+    @foreach (var item in @Model.Vehiculos)
+    {
+        <div  style="display:inline-block; background-color:black;  align-content:center;  width:260px; height:220px " id="@item.VehiculoId">
+            @if (@item.VehiculoId == @Model.Cliente.VehiculoPrincipalId)
+            {
+                <div style="display:inline-block; background-color:#2180ac; border-color:azure; border-style:solid;
+                border-width:thin;  width:240px; height:200px" id="innderDiv+@(item.VehiculoId)">
+                    <table style="background-color:#2180ac!important;">
+                        <tr>
+                            <td>Codigo: &nbsp;</td>
+                            <td style="color:black">@item.VehiculoId</td>
+                        </tr>
+                        <tr>
+                            <td>Marca:&nbsp;</td>
+                            <td style="color:black">@item.Marca</td>
+                        </tr>
+                        <tr>
+                            <td>Modelo:&nbsp;</td>
+                            <td style="color:black">@item.Modelo</td>
+                        </tr>
+                        <tr>
+                            <td>Patente:&nbsp;</td>
+                            <td style="color:black">@item.Patente</td>
+                        </tr>
+                        <tr>
+                            <td>Tipo:&nbsp;</td>
+                            <td style="color:black">Auto</td>
+                        </tr>
+                    </table>
+                </div>
+            }
+            @if (@item.VehiculoId != @Model.Cliente.VehiculoPrincipalId)
+            {
+                <div style="display:inline-block; background-color:black; border-color:azure; border-style:solid;
+                        border-width:thin;  width:240px; height:200px ">
+                    <table style="background-color:black!important;">
+                        <tr>
+                            <td>Codigo: &nbsp;</td>
+                            <td style="color:#888888">@item.VehiculoId</td>
+                        </tr>
+                        <tr>
+                            <td>Marca:&nbsp;</td>
+                            <td style="color:#888888">@item.Marca</td>
+                        </tr>
+                        <tr>
+                            <td>Modelo:&nbsp;</td>
+                            <td style="color:#888888">@item.Modelo</td>
+                        </tr>
+                        <tr>
+                            <td>Patente:&nbsp;</td>
+                            <td style="color:#888888">@item.Patente</td>
+                        </tr>
+                        <tr>
+                            <td>Tipo:&nbsp;</td>
+                            <td style="color:#888888">Auto</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                    <table align="center" style="background-color:black!important;">
+                        <tr>
+                            <td width="100%">
+                                <button type="button" onclick="setearPrincipal(@item.VehiculoId);" class="btn btn-primary left">Es Principal</button>
+                                &nbsp;&nbsp;&nbsp;
+                                <button type="button" onclick="eliminarVehiculo(@item.VehiculoId);" class="btn btn-danger right">Eliminar</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            }
+        </div>
+
+
+    }
+   
+</div>
+<button type="button" onclick="generarReservaBox();" class="btn btn-primary left">Nuevo Vehiculo</button>

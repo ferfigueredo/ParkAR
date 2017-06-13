@@ -92,9 +92,6 @@ namespace ParkAr.Controllers
 
             Cliente cliente = (Cliente)Session["user"];
 
-           // cliente = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(x => x.ClienteId == cliente.ClienteId);
-
-
             Vehiculo vehiculo = cliente.getVehiculoPrincipal();
 
             var estacionamientos = _context.Estacionamientos.ToList();
@@ -107,8 +104,8 @@ namespace ParkAr.Controllers
                 TipoVehiculos = tipoVehiculos,
                 EstacionamientoSeleccionado = estacionamientoSeleccionado,
                 Vehiculo = vehiculo ,
-                Desde = new DateTime(),
-                Hasta = new DateTime()
+                Desde = DateTime.Now,
+                Hasta = DateTime.Now
 
             };
            
@@ -117,8 +114,7 @@ namespace ParkAr.Controllers
         }
 
         [HttpPost]
-        public ActionResult GenerarReserva(String boxID, String estacionamientoID, String desde, String hasta, String marca, 
-            String patente, String modelo, String usuario)
+        public ActionResult GenerarReserva(String boxID, String estacionamientoID, String desde, String hasta, String vehiculoSel)
         {
             // traigo las reservas que tengo de la base de Datos para luego comparar
             //var reservasDb = _context.Reservas.Include(x => x.Box).ToList();
@@ -131,8 +127,6 @@ namespace ParkAr.Controllers
             int boxIdInt = Int32.Parse(boxID);
              Box boxSeleccionado = _context.Boxes.Include(x => x.CategoriaBox).Include(x => x.EstadoBox).SingleOrDefault(x => x.BoxId == boxIdInt);
              boxSeleccionado.EstadoBox = estadoBoxReservado;
-             //_context.Boxes.Add(boxSeleccionado);
-
             
             DateTime dtDesde = Convert.ToDateTime(desde);
             DateTime dtHasta = Convert.ToDateTime(hasta);
@@ -142,15 +136,17 @@ namespace ParkAr.Controllers
 
             cliente = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(p => p.ClienteId == cliente.ClienteId);
 
-            Vehiculo vehiculo = cliente.getVehiculoPrincipal();
-            //tempReserva.BoxId = reservaModel.Box.BoxId;
-            var estadoReserva = _context.EstadoReservas.SingleOrDefault(x => x.EstadoReservaId == 1);
+            
+            int vehiculoSelId = Int32.Parse(vehiculoSel);
+            Vehiculo vehiculoSeleccionado = _context.Vehiculos.SingleOrDefault(x => x.VehiculoId == vehiculoSelId);
 
             
+            //tempReserva.BoxId = reservaModel.Box.BoxId;
+            var estadoReserva = _context.EstadoReservas.SingleOrDefault(x => x.EstadoReservaId == 1);            
 
             tempReserva.FechaDesde = dtDesde;
             tempReserva.FechaHasta = dtHasta;
-            tempReserva.Vehiculo = vehiculo;
+            tempReserva.Vehiculo = vehiculoSeleccionado;
             tempReserva.Box = boxSeleccionado;
             tempReserva.EstadoReserva = estadoReserva;
             tempReserva.BoxId = boxSeleccionado.BoxId;
@@ -158,8 +154,24 @@ namespace ParkAr.Controllers
              _context.Reservas.Add(tempReserva);
 
              _context.SaveChanges();
-             
-            return View();
+
+            int estacionamientoIdInt = Int32.Parse(estacionamientoID);
+            var estacionamiento = _context.Estacionamientos.SingleOrDefault(x => x.EstacionamientoId == estacionamientoIdInt);
+
+
+            var model = new ConfirmacionReservaViewModel()
+            {
+                Box = boxSeleccionado,
+                Cliente = cliente,
+                TipoVehiculoSeleccionado = vehiculoSeleccionado.TipoVehiculo,
+                EstacionamientoSeleccionado = estacionamiento,
+                Vehiculo = vehiculoSeleccionado,
+                Desde = dtDesde,
+                Hasta = dtHasta
+
+            };
+
+            return View("ConfirmacionReserva", model);
         }
    
 

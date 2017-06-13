@@ -1,8 +1,8 @@
 ﻿@model ParkAr.Models.Estacionamiento
 
 @{
-    ViewBag.Title = "Index3";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Boxes";
+    Layout = "~/Views/Shared/_LayoutAjaxResult.cshtml";
 }
 
 <script>
@@ -23,14 +23,76 @@
 </script>
 <h2>Boxes del Estacionamiento @Model.Nombre</h2>
 
-@foreach (var item in @Model.Boxes)
-{
+@*
+    <div id="container-boxes">
 
-        <div style="background-color:green; border-color:azure; border-spacing:5px!important" onclick="reservarBox(@item.BoxId)" width="30px" height="50px" >
-            @item.Numero
+        <table class="table table-striped">
+            <tdhead>
+                <tr>
+                    <th><font size="6" color="grey">Piso</font></th>
+                    <th><font size="6" color="grey">Numero</font></th>
+                </tr>
+            </tdhead>
+            <tbody>
+                @foreach (var item in Model.Boxes)
+                {
+                    <tr>
+                        <th>@item.Piso</th>
+                        <th onclick="reservarBox(@item.BoxId)">@item.Numero</th>
+                    </tr>
+
+                }
+            </tbody>
+
+
+        </table>
+*@
+    
+   @*
+    <div class="container-fluid">
+        <div class="row">
+            @for (var i = 0; i < Model.Boxes.Count; i++)
+            {
+                if (i > 0 && i % 12 == 0)
+                {
+                    @:</div><div class="row">
+                }
+                <div class="col-lg-1">@Html.TextBoxFor(x => x.Boxes[i].Value)</div>
+            }
         </div>
+
+    </div>
+    *@
+    <div >
+    @foreach (var item in @Model.Boxes)
+    {
+
+        <div  style="display:inline-block; background-color:dimgrey; border-color:azure; border-style:solid;
+            border-width:thick; height:200px; width:104px; " onclick="reservarBox(@item.BoxId)" >
+                @if (@item.EstadoBox.EstadoBoxId == 1)
+                {
+                    <h3 style="color:#2180ac">@item.Numero</h3>
+                }
+                @if (@item.EstadoBox.EstadoBoxId == 2)
+                {
+                    <h3 style="color:#cc0000">Ocup</h3>                   
+                }
+                @if (@item.EstadoBox.EstadoBoxId == 3)
+                {
+                    <h3 style="color:#cc0000">Ocup</h3>
+                }
+        </div>
+
+
+    }
+   
+</div>
+
+
+
    
 
-}
+
+
 
 

@@ -29,13 +29,79 @@ namespace ParkAr.Controllers
             Cliente cliente = (Cliente)Session["user"];
 
 
-            var model = new PerfilUserViewModel
+            PerfilUserViewModel model = new PerfilUserViewModel()
             {
                 Cliente = cliente,
-                Vehiculos = cliente.Vehiculos,
+                Vehiculos = getVehiculosOrdenados(cliente.VehiculoPrincipalId, cliente.Vehiculos),
                 VehiculoSelId = cliente.VehiculoPrincipalId
             };
-            return View();
+            return View(model);
+        }
+
+        private ICollection<Vehiculo> getVehiculosOrdenados(int VehiculoPrincipalId, ICollection<Vehiculo> vehiculos)
+        {
+            ICollection<Vehiculo> autos = new List<Vehiculo>();
+            foreach (var item in vehiculos)
+            {
+                if (item.VehiculoId == VehiculoPrincipalId)
+                {
+                    autos.Add(item);
+                }
+            }
+            foreach (var item in vehiculos)
+            {
+                if (item.VehiculoId != VehiculoPrincipalId)
+                {
+                    autos.Add(item);
+                }
+            }
+            return autos;
+        }
+
+
+        public String EliminarVehiculo(string vehiculoId)
+        {
+            int id = Int32.Parse(vehiculoId);
+           
+            Cliente cliente = (Cliente)Session["user"];
+
+            foreach (var vehic in cliente.Vehiculos)
+            {
+                if (vehic.VehiculoId == id)
+                {
+                    Vehiculo v = _context.Vehiculos.SingleOrDefault(vi => vi.VehiculoId == vehic.VehiculoId);
+                    v.cliente = null;
+
+                    _context.Entry(v).State = EntityState.Modified;
+                    _context.SaveChanges();
+
+                    /*
+                    _context.Vehiculos.Attach(v);
+                    _context.Entry(v).State = EntityState.Modified;
+                    var entry = _context.Entry(v);
+                    if(TryUpdateModel(v, "", new String[] { "cliente" }))
+                    {
+                        _context.SaveChanges();
+                    }
+                    //_context.Entry(v).State = System.Data.Entity.EntityState.Modified;
+                    */
+                    
+                    break;
+                }
+            }
+
+            return "SUCCESS";
+        }
+
+        public String SetearVehiculoPrincipal(string vehiculoId)
+        {
+            int id = Int32.Parse(vehiculoId);
+            Cliente cliente = (Cliente)Session["user"];
+            cliente = _context.Cientes.SingleOrDefault(c => c.ClienteId == cliente.ClienteId);
+
+            cliente.VehiculoPrincipalId = id;
+            _context.SaveChanges();
+            return "SUCCESS";
         }
     }
 }
