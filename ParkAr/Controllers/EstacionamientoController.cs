@@ -76,7 +76,7 @@ namespace ParkAr.Controllers
             _context.SaveChanges();*/
 
 
-            return View(estacionamiento);
+            return PartialView(estacionamiento);
         }
 
         public ActionResult ReservarBox(string boxId, string estacionamientoId)
