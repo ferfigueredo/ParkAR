@@ -7,6 +7,10 @@ namespace ParkAr.Models
 {
     public class Vehiculo
     {
+        public Vehiculo()
+        {
+            Eliminado = false;
+        }
         public int VehiculoId { get; set; }
 
         public string Patente { get; set; }
@@ -20,6 +24,8 @@ namespace ParkAr.Models
         public int TipoVehiculoId { get; set; }
 
         public Cliente cliente { get; set; }
+
+        public Boolean Eliminado { get; set; }
 
 
     }

@@ -1119,3 +1119,4 @@ D:\UP\POO\Tp Final_Figueredo_Ricci\git\PAO\ParkAr\obj\Debug\ParkAr.Migrations.al
 D:\UP\POO\Tp Final_Figueredo_Ricci\git\PAO\ParkAr\obj\Debug\ParkAr.csproj.GenerateResource.Cache
 D:\UP\POO\Tp Final_Figueredo_Ricci\git\PAO\ParkAr\obj\Debug\ParkAr.dll
 D:\UP\POO\Tp Final_Figueredo_Ricci\git\PAO\ParkAr\obj\Debug\ParkAr.pdb
+C:\Users\fernando.a.mordasini\Documents\workspaceVS\TP Final_Figueredo_Ricci\ParkAr\obj\Debug\ParkAr.Migrations.agreguecampoeliminadoacliente.resources

@@ -32,6 +32,7 @@ namespace ParkAr.Controllers
             Cliente cliente = (Cliente)user;
             Session["user"] = cliente;
 
+
             var estacionamientos = _context.Estacionamientos.Include(e => e.Boxes).ToList();
             var model = new ReservaBoxViewModel
             {
@@ -52,14 +53,14 @@ namespace ParkAr.Controllers
                                     .Include(x => x.Boxes.Select(y => y.EstadoBox)).SingleOrDefault(x => x.EstacionamientoId == id);
 
             /* **** Para agregar Boxes a un estacionamiento ***** */
-
-           /* EstadoBox estadoBoxLibre = _context.EstadosBox.SingleOrDefault(y => y.EstadoBoxId == 1);
+            /*
+           EstadoBox estadoBoxLibre = _context.EstadosBox.SingleOrDefault(y => y.EstadoBoxId == 1);
             CategoriaBox categoria = _context.CategoriasBox.SingleOrDefault(y => y.CategoriaBoxId == 1);
-            int i = 41;
-            while (i < 81) {
+            int i = 1;
+            while (i < 41) {
                 Box box = new Box()
                 {
-                    Piso = 2,
+                    Piso = 1,
                     Numero = i,
                     EstacionamientoId = estacionamiento.EstacionamientoId,
                     Estacionamiento = estacionamiento,
@@ -74,8 +75,30 @@ namespace ParkAr.Controllers
             }
             _context.SaveChanges();*/
 
+            String nombre = estacionamiento.Nombre;
+            VerBoxesViewModel model = new VerBoxesViewModel()
+            {
+                MapaBoxes = new Dictionary<int, ICollection<Box>>(),
+                NombreEstacionamiento = nombre
+            };
+            foreach (Box box in estacionamiento.Boxes)
+            {
+                if (model.MapaBoxes.ContainsKey(box.Piso))
+                {
+                    ICollection<Box> boxesPiso = model.MapaBoxes[box.Piso];
+                    boxesPiso.Add(box);
+                }
+                else
+                {                    
+                    ICollection<Box> boxesPiso = new List<Box>();
+                    model.MapaBoxes.Add(box.Piso, boxesPiso);
+                    boxesPiso.Add(box);
+                }
+            }
+            
+           
 
-            return PartialView(estacionamiento);
+            return PartialView(model);
         }
 
         public ActionResult ReservarBox(string boxId, string estacionamientoId)
@@ -121,25 +144,21 @@ namespace ParkAr.Controllers
 
             var tempReserva = new Reserva();
 
-            EstadoBox estadoBoxReservado = _context.EstadosBox.SingleOrDefault(y => y.EstadoBoxId == 3);
-         
+            EstadoBox estadoBoxReservado = _context.EstadosBox.SingleOrDefault(y => y.EstadoBoxId == 3);         
 
             int boxIdInt = Int32.Parse(boxID);
              Box boxSeleccionado = _context.Boxes.Include(x => x.CategoriaBox).Include(x => x.EstadoBox).SingleOrDefault(x => x.BoxId == boxIdInt);
              boxSeleccionado.EstadoBox = estadoBoxReservado;
             
             DateTime dtDesde = Convert.ToDateTime(desde);
-            DateTime dtHasta = Convert.ToDateTime(hasta);
-            
+            DateTime dtHasta = Convert.ToDateTime(hasta);            
            
             Cliente cliente = (Cliente)Session["user"];           
 
             cliente = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(p => p.ClienteId == cliente.ClienteId);
-
             
             int vehiculoSelId = Int32.Parse(vehiculoSel);
             Vehiculo vehiculoSeleccionado = _context.Vehiculos.SingleOrDefault(x => x.VehiculoId == vehiculoSelId);
-
             
             //tempReserva.BoxId = reservaModel.Box.BoxId;
             var estadoReserva = _context.EstadoReservas.SingleOrDefault(x => x.EstadoReservaId == 1);            

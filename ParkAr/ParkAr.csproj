@@ -284,6 +284,10 @@
     <Compile Include="Migrations\201706062308087_alter_EstadoBox_6_6_2017_2.Designer.cs">
       <DependentUpon>201706062308087_alter_EstadoBox_6_6_2017_2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706131927318_agregue campo eliminado a cliente.cs" />
+    <Compile Include="Migrations\201706131927318_agregue campo eliminado a cliente.Designer.cs">
+      <DependentUpon>201706131927318_agregue campo eliminado a cliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Box.cs" />
@@ -304,6 +308,7 @@
     <Compile Include="ViewModels\ConfirmacionReservaViewModel.cs" />
     <Compile Include="ViewModels\PerfilUserViewModel.cs" />
     <Compile Include="ViewModels\ReservaBoxViewModel.cs" />
+    <Compile Include="ViewModels\VerBoxesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -311,6 +316,7 @@
     <Content Include="Content\box.png" />
     <Content Include="Content\car_top.png" />
     <Content Include="Content\car_top2.png" />
+    <Content Include="Content\classic_cars.jpg" />
     <Content Include="Content\parking2.jpg" />
     <Content Include="Content\park_hd2.jpg" />
     <Content Include="Content\park_open.jpg" />
@@ -377,6 +383,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\ParkingScripts.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config" />
@@ -415,14 +422,12 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Estacionamiento\Index.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
-    <Content Include="Views\Estacionamiento\_Details.cshtml" />
     <Content Include="Views\Estacionamiento\VerBoxes.cshtml" />
     <Content Include="Views\Shared\_LayoutEmbebedPage.cshtml" />
     <Content Include="Views\Estacionamiento\GenerarReserva.cshtml" />
     <Content Include="Views\Shared\_LayoutAjaxResult.cshtml" />
     <Content Include="Views\Estacionamiento\ReservaBox.cshtml" />
     <Content Include="Views\Perfil\Index.cshtml" />
-    <Content Include="Views\Perfil\Vehiculos.cshtml" />
     <Content Include="Views\Estacionamiento\ConfirmacionReserva.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -507,6 +512,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706062308087_alter_EstadoBox_6_6_2017_2.resx">
       <DependentUpon>201706062308087_alter_EstadoBox_6_6_2017_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706131927318_agregue campo eliminado a cliente.resx">
+      <DependentUpon>201706131927318_agregue campo eliminado a cliente.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

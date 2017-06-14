@@ -13,14 +13,14 @@ NO SE USA MAS
 -->
 <script>
     function generarReservaBox() {
-       
+
         var _data = {
             "boxID": $('#boxSeleccionado').val(),
             "estacionamientoID": $('#EstacionamientoSelect').val(),
             "desde": $('#Desde').val(),
             "hasta": $('#Hasta').val(),
             "vehiculoSel": $('#VehiculoSelect').val()
-          
+
         };
 
             $.ajax({
@@ -32,7 +32,11 @@ NO SE USA MAS
                     $('#container-boxes').html(result); },
                 error: function () { alert('Error'); }
             });
-        }
+    }
+
+    function cancelar() {
+        window.location.href = "/";
+    }
 
 </script>
 

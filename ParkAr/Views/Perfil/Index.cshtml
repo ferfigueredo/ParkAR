@@ -23,7 +23,7 @@
                 error: function () { alert('Error'); }
             });
         }
-    
+
     function setearPrincipal(vehiculoId) {
         var _data = {
             "vehiculoId": vehiculoId,
@@ -36,10 +36,14 @@
                 data: JSON.stringify(_data),
                 success: function (result) {
                     $("#innerDiv" + vehiculoId).css("background-color", "#2180ac");
-                    window.location.reload();                   
+                    window.location.reload();
                 },
                 error: function () { alert('Error'); }
             });
+    }
+
+    function nuevo() {
+        alert("En este momento no podemos atender su solictud");
         }
 </script>
 
@@ -135,4 +139,4 @@
     }
    
 </div>
-<button type="button" onclick="generarReservaBox();" class="btn btn-primary left">Nuevo Vehiculo</button>
+<button type="button" onclick="nuevo();" class="btn btn-primary left">Nuevo Vehiculo</button>

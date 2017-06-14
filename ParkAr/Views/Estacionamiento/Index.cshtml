@@ -21,10 +21,10 @@
                             $('#container-boxes').html(result);
                             $('#divListaEstacionamientos').hide();   
                         },
-                        error: function () {
-                            alert(xhr.status);
-                            alert(thrownError);
-                            alert(xhr.responseText);
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert(jqXHR.status);
+                            alert(errorThrown);
+                            //alert(jqXHR.responseText);
                         }
                     });
                 }
@@ -36,21 +36,20 @@
 
 <div class="form-group" id="divListaEstacionamientos" >
 
-    <h2>Seleccione Estacionamiento</h2>
+    <h2>Estacionamientos</h2>
 
-
-    <p>Estacionamiento</p>
     @* @Html.DropDownList("Estacionamiento", new SelectList(Model.Select(e => e.Nombre).Distinct().ToList()), "EstacionamientoId", "Nombre", "Seleccione Estacionamiento", new { @class = "form-control" })-->*@
 
+        <div class="jumbotron" style="background-image:url(../Content/classic_cars.jpg); height: 565px; width: 1140px ">
+            <select id="EstacionamientoSelect">
+                <option value="0">Seleccione un estacionamiento</option>
+                @foreach (var park in @Model.Estacionamientos)
+                {
+                    <option value="@park.EstacionamientoId">@park.Nombre</option>
+                }
+            </select>
 
-    <select id="EstacionamientoSelect">
-        <option value="0">Seleccione un estacionamiento</option>
-        @foreach (var park in @Model.Estacionamientos)
-        {
-            <option value="@park.EstacionamientoId">@park.Nombre</option>
-        }
-    </select>
-   
+        </div>  
 </div>
 
 <div id="container-boxes">

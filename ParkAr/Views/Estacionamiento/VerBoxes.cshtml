@@ -1,4 +1,4 @@
-﻿@model ParkAr.Models.Estacionamiento
+﻿@model ParkAr.ViewModels.VerBoxesViewModel
 
 @{
     ViewBag.Title = "Boxes";
@@ -11,17 +11,19 @@
                 type: 'GET',
                 url: '@Url.Action("ReservarBox")',
                 data: { boxID: boxId, estacionamientoId: $('#EstacionamientoSelect').val() },
-                success: function (result) { $('#container-boxes').html(result); },
-                error: function () {
-                    alert(xhr.status);
-                    alert(thrownError);
-                    alert(xhr.responseText);
+                success: function (result) {
+                    $('#container-boxes').html(result);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(jqXHR.status);
+                    alert(errorThrown);
+                    //alert(jqXHR.responseText);
                 }
             });
         }
 
 </script>
-<h2>Boxes del Estacionamiento @Model.Nombre</h2>
+<h2>Boxes del Estacionamiento @Model.NombreEstacionamiento</h2>
 @*
 
 
@@ -52,7 +54,7 @@
     </div>
 
  *@   
-    <div >
+    @*<div >
     @foreach (var item in @Model.Boxes)
     {
 
@@ -73,12 +75,39 @@
         </div>
 
 
-    }
-   
-</div>
+    }*@
+
+        <div>
+            @foreach (var piso in @Model.MapaBoxes)
+            {
+                <hr />
+                <h3>Piso&nbsp;@piso.Key</h3>
+                <div>
+                    @foreach (var item in @piso.Value)
+                    {
+                        <div style="display:inline-block; background-color:dimgrey; border-color:azure; border-style:solid;
+                        border-width:thick; height:200px; width:104px; " onclick="reservarBox(@item.BoxId)">
+                            @if (@item.EstadoBox.EstadoBoxId == 1)
+                    {
+                                <h3 style="color:#2180ac">@item.Numero</h3>
+                            }
+                            @if (@item.EstadoBox.EstadoBoxId == 2)
+                    {
+                                <h3 style="color:#cc0000">Ocup</h3>
+                            }
+                            @if (@item.EstadoBox.EstadoBoxId == 3)
+                    {
+                                <h3 style="color:#cc0000">Ocup</h3>
+                            }
+                        </div>
 
 
-</div>
+                    }
+                </div>
+            }
+        </div>
+
+
 
 
    

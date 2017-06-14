@@ -21,9 +21,11 @@ namespace ParkAr.Controllers
         // GET: Perfil
         public ActionResult Index()
         {
+            //.RemoveAll(r => r.Customer.Deleted == true);
             /** Esto es para simplificar el desarrollo y no tener que estara logeandose a cada rato */
             var user = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(p => p.Email == "ferfigueredo@gmail.com");
             Session["user"] = user;
+
             /* ********************************************************* */
 
             Cliente cliente = (Cliente)Session["user"];
@@ -43,14 +45,14 @@ namespace ParkAr.Controllers
             ICollection<Vehiculo> autos = new List<Vehiculo>();
             foreach (var item in vehiculos)
             {
-                if (item.VehiculoId == VehiculoPrincipalId)
+                if (item.VehiculoId == VehiculoPrincipalId && item.Eliminado == false)
                 {
                     autos.Add(item);
                 }
             }
             foreach (var item in vehiculos)
             {
-                if (item.VehiculoId != VehiculoPrincipalId)
+                if (item.VehiculoId != VehiculoPrincipalId && item.Eliminado == false)
                 {
                     autos.Add(item);
                 }
@@ -65,30 +67,25 @@ namespace ParkAr.Controllers
            
             Cliente cliente = (Cliente)Session["user"];
 
-            foreach (var vehic in cliente.Vehiculos)
+            
+                
+            Vehiculo v = _context.Vehiculos.SingleOrDefault(vi => vi.VehiculoId == id);
+            v.Eliminado = true;
+
+          
+            _context.SaveChanges();
+
+            /*
+            _context.Vehiculos.Attach(v);
+            _context.Entry(v).State = EntityState.Modified;
+            var entry = _context.Entry(v);
+            if(TryUpdateModel(v, "", new String[] { "cliente" }))
             {
-                if (vehic.VehiculoId == id)
-                {
-                    Vehiculo v = _context.Vehiculos.SingleOrDefault(vi => vi.VehiculoId == vehic.VehiculoId);
-                    v.cliente = null;
-
-                    _context.Entry(v).State = EntityState.Modified;
-                    _context.SaveChanges();
-
-                    /*
-                    _context.Vehiculos.Attach(v);
-                    _context.Entry(v).State = EntityState.Modified;
-                    var entry = _context.Entry(v);
-                    if(TryUpdateModel(v, "", new String[] { "cliente" }))
-                    {
-                        _context.SaveChanges();
-                    }
-                    //_context.Entry(v).State = System.Data.Entity.EntityState.Modified;
-                    */
-                    
-                    break;
-                }
+                _context.SaveChanges();
             }
+            //_context.Entry(v).State = System.Data.Entity.EntityState.Modified;
+            */
+       
 
             return "SUCCESS";
         }
