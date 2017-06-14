@@ -24,11 +24,17 @@ namespace ParkAr.Controllers
             _context.Dispose();
         }
 
-        
+
         public ActionResult Index()
         {
             /** Esto es para simplificar el desarrollo y no tener que estara logeandose a cada rato */
             var user = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(p => p.Email == "ferfigueredo@gmail.com");
+
+            //var user = _context.Cientes.SingleOrDefault(p => p.Email == "ferfigueredo@gmail.com");
+            if (user != null && user.Vehiculos != null)
+            {
+                user.Vehiculos = user?.Vehiculos.Where(x => !x.Eliminado).ToList();
+            }
             Cliente cliente = (Cliente)user;
             Session["user"] = cliente;
 

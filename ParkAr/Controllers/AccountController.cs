@@ -87,8 +87,11 @@ namespace ParkAr.Controllers
             {
                 case SignInStatus.Success:
 
-                    var user = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(p => p.Email == "ferfigueredo@gmail.com" );
-                    //var cliente = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(x => x.Email == "ferfigueredo@gmail.com");
+                    var user = _context.Cientes.Include(x => x.Vehiculos).SingleOrDefault(p => p.Email == model.Email);
+                    if (user != null && user.Vehiculos != null)
+                    {
+                        user.Vehiculos = user?.Vehiculos.Where(x => !x.Eliminado).ToList();
+                    }
                     Cliente cliente = (Cliente)user;
                     Session["user"] = cliente;
                     /*
