@@ -9,6 +9,7 @@ namespace ParkAr.ViewModels
 {
     public class ReservaBoxViewModel
     {
+       
         public Box Box { get; set; }
 
 

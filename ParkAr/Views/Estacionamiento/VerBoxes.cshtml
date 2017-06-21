@@ -78,42 +78,46 @@
     }*@
 
         <div>
-            @foreach (var piso in @Model.MapaBoxes)
+    @foreach (var piso in @Model.MapaBoxes)
             {
-                <hr />
+            <hr />
                 <h3>Piso&nbsp;@piso.Key</h3>
                 <div>
                     @foreach (var item in @piso.Value)
                     {
-                        <div style="display:inline-block; background-color:dimgrey; border-color:azure; border-style:solid;
-                        border-width:thick; height:200px; width:104px; " onclick="reservarBox(@item.BoxId)">
+                        <div style="display:inline-block;">
                             @if (@item.EstadoBox.EstadoBoxId == 1)
-                    {
-                                <h3 style="color:#2180ac">@item.Numero</h3>
+                            {
+                                <div style="display:inline-block; background-color:dimgrey; border-color:azure; border-style:solid;
+                                border-width:thick; height:200px; width:104px; " onclick="reservarBox(@item.BoxId)">
+                                    <h3 style="color:aliceblue">@item.Numero </h3>
+                                </div>
                             }
                             @if (@item.EstadoBox.EstadoBoxId == 2)
-                    {
-                                <h3 style="color:#cc0000">Ocup</h3>
+                            {
+                                <div style="display:inline-block; background-color:dimgrey; background-image:url(../Content/car_top.png); border-color:azure; border-style:solid;
+                                border-width:thick; height:200px; width:104px; " onclick="">
+                                    <h3> &nbsp;</h3> 
+                                </div>
                             }
                             @if (@item.EstadoBox.EstadoBoxId == 3)
-                    {
-                                <h3 style="color:#cc0000">Ocup</h3>
+                            {
+                                <div style="display:inline-block; background-color:dimgrey; background-image:url(../Content/car_top2.png); border-color:azure; border-style:solid;
+                                border-width:thick; height:200px; width:104px; " onclick="">
+                                    <h3> &nbsp;</h3> 
+                                </div>
                             }
                         </div>
-
-
                     }
                 </div>
-            }
-        </div>
+        }
+</div>
 
 
 
 
-   
 
 
-          
 
 
 

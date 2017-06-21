@@ -8,8 +8,17 @@ namespace ParkAr.ViewModels
 {
     public class VerBoxesViewModel
     {
-       
-       public Dictionary<int, ICollection<Box>> MapaBoxes { get; set; }
+        private Random RND;
+
+        public VerBoxesViewModel()
+        {
+            RND = new Random();
+        }
+        public int GetRandom()
+        {
+            return RND.Next(2, 3);
+        }
+        public Dictionary<int, ICollection<Box>> MapaBoxes { get; set; }
        public String NombreEstacionamiento { get; set; }
     }
 }
