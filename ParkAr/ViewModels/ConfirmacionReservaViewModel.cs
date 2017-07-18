@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ParkAr.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Collections;
 
 namespace ParkAr.ViewModels
 {
@@ -29,5 +30,8 @@ namespace ParkAr.ViewModels
 
         [Display(Name = "Vehiculo")]
         public Vehiculo Vehiculo { get; set; }
+
+        [Display(Name = "MPCheckoutLink")]
+        public String  MPCheckoutLink { get; set; }
     }
 }

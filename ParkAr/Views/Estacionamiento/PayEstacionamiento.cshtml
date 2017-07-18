@@ -1,0 +1,13 @@
+﻿@model String
+@using mercadopago
+@using System.Collections
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pay</title>
+</head>
+<body>
+    <a href="<% Response.Write(preference[" response"]["sandbox_init_point"]); %>"Pay</a>
+</body>
+</html>

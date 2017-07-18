@@ -3,17 +3,35 @@
     ViewBag.Title = "GenerarReserva";
     Layout = "~/Views/Shared/_LayoutAjaxResult.cshtml";
 }
+
+@using mercadopago
+
+<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+
 <script>
     function volver() {
         window.location.href = "/";
     }
+    Mercadopago.setPublishableKey("TEST-620d620f-12ce-47f2-9a41-b88c75b66fd9");
+</script>
 
+<script type="text/javascript">
+    (function () {
+        function $MPC_load() {
+        window.$MPC_loaded !== true && (function () {
+            var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
+            s.src = document.location.protocol + "//secure.mlstatic.com/mptools/render.js";
+            var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+            window.$MPC_loaded = true;
+        })();
+        } window.$MPC_loaded !== true ? (window.attachEvent ? window.attachEvent('onload', $MPC_load) : window.addEventListener('load', $MPC_load, false)) : null;
+    })();
 </script>
 
 <h2>Reserva Confirmada</h2>
 
 
-@using (Html.BeginForm("ConfirmacionReserva", "ConfirmacionReserva"))
+@using (Html.BeginForm("PayEstacionamiento", "Estacionamiento"))
 {
     <div class="form-group">
         <div>
@@ -47,10 +65,17 @@
         </div>        
         
         <br />
+      
         <br />
         <div class="form-group">
-            <button type="button" onclick="volver();" class="btn btn-primary left">Cerrar</button>
-            
+            <button type="button" onclick="volver();" class="btn btn-primary left">Cerrar</button>          
+               
+                <input type="hidden" value="1" name="id" id="id"/>   
+                <a href="@Model.MPCheckoutLink">Pagar 1</a>
+                <a mp-mode="dftl" href="https://www.mercadopago.com/mla/checkout/start?pref_id=9475311-0a5ec344-a297-4c48-9348-cb900075da2c" name="MP-payButton" class='grey-tr-m-rn-none'>Pagar 2</a>
+
         </div>
     </div>
+
+
 }

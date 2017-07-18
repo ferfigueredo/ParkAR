@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using ParkAr.Models;
 using System.Data.Entity;
 using ParkAr.ViewModels;
+using mercadopago;
+using System.Collections;
+using System.Web.Helpers;
 
 namespace ParkAr.Controllers
 {
@@ -143,7 +146,7 @@ namespace ParkAr.Controllers
         }
 
         [HttpPost]
-        public ActionResult GenerarReserva(String boxID, String estacionamientoID, String desde, String hasta, String vehiculoSel)
+        public ActionResult GenerarReserva(String boxID, String estacionamientoID, String desde, String hasta, String vehiculoSel, ControllerContext context)
         {
             // traigo las reservas que tengo de la base de Datos para luego comparar
             //var reservasDb = _context.Reservas.Include(x => x.Box).ToList();
@@ -192,9 +195,31 @@ namespace ParkAr.Controllers
                 EstacionamientoSeleccionado = estacionamiento,
                 Vehiculo = vehiculoSeleccionado,
                 Desde = dtDesde,
-                Hasta = dtHasta
-
+                Hasta = dtHasta,
+                MPCheckoutLink = ""
             };
+    
+            MP mp = new MP("1289778604132689", "zmbZeSQHeC8Zmb4rFbIBWHAHwm4thyig");
+            //mp.sandboxMode(true);
+            String preferenceData = "{\"items\":" +
+                                        "[{" +
+                                            "\"title\":\"Parkin: "+ estacionamiento.Nombre + "\"," +
+                                            "\"quantity\":1," +
+                                            "\"currency_id\":\"ARS\"," +
+                                            "\"unit_price\":10.0" +
+                                        "}]," +
+                                        "\"back_urls\": {" +
+                                            "\"success\": \"http://localhost:49557/Estacionamiento\"," +
+                                            "\"failure\": \"http://localhost:49557/Estacionamiento\"," +
+                                            "\"pending\": \"http://localhost:49557/Estacionamiento\"" +
+                                        "}" +
+                                    "}";
+
+            Hashtable preference = mp.createPreference(preferenceData);
+            Hashtable data = (Hashtable)preference["response"];
+            String sandboxInitPoint = (String)data["sandbox_init_point"];
+
+            model.MPCheckoutLink = sandboxInitPoint;
 
             return View("ConfirmacionReserva", model);
         }
@@ -208,6 +233,22 @@ namespace ParkAr.Controllers
             var model = _context.Estacionamientos.Find(id); // This is for example put your code to fetch record. 
             
             return PartialView("_Details", model);
+        }
+
+        public ViewResult PayEstacionamiento(int id /* drop down value */)
+        { 
+            String sandboxInitPoint = "";
+
+            return View("PayEstacionamiento", sandboxInitPoint);
+        }
+
+        public ViewResult ConfirmarcionPago(String msgMP)
+        {
+
+            String msg = msgMP + "";
+
+
+            return View("ConfirmacionPago", "Pago confirmado");
         }
     }
 
